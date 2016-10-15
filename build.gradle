@@ -1,0 +1,52 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
+    }
+}
+
+group 'org.jeffklein.nfl.livescores'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'nfllivescores-spring-boot'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile(
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.8.3'],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.8.3'],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.3'],
+            [group: 'log4j', name: 'log4j', version: '1.2.17'],
+            [group: 'mysql', name: 'mysql-connector-java', version: '6.0.4'],
+            [group: 'org.hibernate', name: 'hibernate-core', version: '5.2.3.Final'],
+            [group: 'org.springframework', name: 'spring-core', version: '4.3.3.RELEASE'],
+            [group: 'org.springframework', name: 'spring-context', version: '4.3.3.RELEASE'],
+            [group: 'org.springframework', name: 'spring-tx', version: '4.3.3.RELEASE'],
+            [group: 'org.springframework', name: 'spring-orm', version: '4.3.3.RELEASE'],
+            [group: 'commons-dbcp', name: 'commons-dbcp', version: '1.4'],
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.4.1.RELEASE'],
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '1.4.1.RELEASE']
+    )
+    testCompile (
+            [group: 'junit', name: 'junit', version: '4.12'],
+            [group: 'org.springframework', name: 'spring-test', version: '4.3.3.RELEASE'],
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.4.1.RELEASE'],
+            [group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3']
+    )
+}
+
