@@ -23,26 +23,40 @@ public class GameDaoImpl extends AbstractHibernateDao implements GameDao {
 
     final static Logger logger = Logger.getLogger(GameDaoImpl.class);
 
+    @Override
     public void createGame(Game game) {
         Integer id = (Integer) super.create(game);
         logger.debug("Created game with id: "+id);
     }
 
+    @Override
     public void deleteGame(Game game) {
         logger.debug("Deleted game with id: " + game.getGameId());
         super.delete(game);
     }
 
+    @Override
     public void updateGame(Game game) {
         logger.debug("Updated game with id: " + game.getGameId());
         super.update(game);
     }
 
+    @Override
+    public void createOrUpdateGame(Game game) {
+        try {
+            createGame(game);
+        }
+        catch (Exception e) {
+            logger.warn("couldn't create game. attempting to update it.", e);
+            updateGame(game);
+        }
+    }
+
+    @Override
     public Game findById(Integer id) {
         CriteriaBuilder builder = getEntityManagerFactory().getCriteriaBuilder();
         CriteriaQuery<Game> criteria = builder.createQuery(Game.class);
         Root<Game> gameRoot = criteria.from( Game.class );
-        //criteria.select(gameRoot);
         criteria.where(builder.equal(gameRoot.get(Game_.gameId), id ));
         Game result = null;
         try {
@@ -54,7 +68,29 @@ public class GameDaoImpl extends AbstractHibernateDao implements GameDao {
         return result;
     }
 
-    public List<Game> findAllForWeek(String week, Integer year) {
+    @Override
+    public List<Game> findAllGames() {
+        return getSession().createQuery("FROM " + Game.class.getSimpleName()).list();
+    }
+
+    @Override
+    public List<Game> findAllGamesInYear(Integer year) {
+        CriteriaBuilder builder = getEntityManagerFactory().getCriteriaBuilder();
+        CriteriaQuery<Game> criteria = builder.createQuery(Game.class);
+        Root<Game> gameRoot = criteria.from( Game.class );
+        criteria.where(builder.equal(gameRoot.get(Game_.year), year ));
+        List<Game> results;
+        try {
+            results = getEntityManagerFactory().createEntityManager().createQuery(criteria).getResultList();
+        }
+        catch(NoResultException nre) {
+            return new ArrayList<Game>();
+        }
+        return results;
+    }
+
+    @Override
+    public List<Game> findAllGamesInWeekAndYear(String week, Integer year) {
         CriteriaBuilder builder = getEntityManagerFactory().getCriteriaBuilder();
         CriteriaQuery<Game> criteria = builder.createQuery(Game.class);
         Root<Game> gameRoot = criteria.from(Game.class);
@@ -71,9 +107,5 @@ public class GameDaoImpl extends AbstractHibernateDao implements GameDao {
             return new ArrayList<Game>();
         }
         return results;
-    }
-
-    public List<Game> findAll() {
-        return getSession().createQuery("FROM " + Game.class.getSimpleName()).list();
     }
 }

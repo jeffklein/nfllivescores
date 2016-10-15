@@ -52,7 +52,7 @@ public class GameDaoTest implements ApplicationContextAware {
     public void testInsertUpdateAndDeleteOneGame() {
         Assert.assertNotNull(this.games);
         Assert.assertNotNull(this.gameDao);
-        List<Game> ensureDbEmpty = this.gameDao.findAll();
+        List<Game> ensureDbEmpty = this.gameDao.findAllGames();
         Assert.assertEquals(0, ensureDbEmpty.size());
         Assert.assertNotNull(this.games.get(0));
         Assert.assertTrue(this.games.size() > 0);
@@ -73,14 +73,14 @@ public class GameDaoTest implements ApplicationContextAware {
     public void testInsertUpdateFindAndDeleteAll() {
         Assert.assertNotNull(this.games);
         Assert.assertNotNull(this.gameDao);
-        List<Game> ensureDbEmpty = this.gameDao.findAll();
+        List<Game> ensureDbEmpty = this.gameDao.findAllGames();
         Assert.assertEquals(0, ensureDbEmpty.size());
 
         for (Game game : this.games) {
             this.gameDao.createGame(game);
         }
 
-        List<Game> fromDb = this.gameDao.findAll();
+        List<Game> fromDb = this.gameDao.findAllGames();
         Assert.assertEquals(14, fromDb.size());
         logger.debug("found "+fromDb.size()+" records in result set");
         for (Game game : fromDb) {
@@ -88,7 +88,7 @@ public class GameDaoTest implements ApplicationContextAware {
             this.gameDao.updateGame(game);
         }
 
-        List<Game> fromDb2 = this.gameDao.findAll();
+        List<Game> fromDb2 = this.gameDao.findAllGames();
         Assert.assertEquals(14, fromDb2.size());
         for(Game game : fromDb2) {
             Assert.assertEquals("testpassed!", game.getStatus());
@@ -98,31 +98,55 @@ public class GameDaoTest implements ApplicationContextAware {
             this.gameDao.deleteGame(game);
         }
 
-        List<Game> fromDb3 = this.gameDao.findAll();
+        List<Game> fromDb3 = this.gameDao.findAllGames();
         Assert.assertEquals(0, fromDb3.size());
     }
 
     @Test
-    public void testFindAllForWeek() {
+    public void testFindAllGamesInYear() {
         Assert.assertNotNull(this.games);
         Assert.assertNotNull(this.gameDao);
-        List<Game> ensureDbEmpty = this.gameDao.findAll();
+        List<Game> ensureDbEmpty = this.gameDao.findAllGames();
         Assert.assertEquals(0, ensureDbEmpty.size());
 
         for (Game game : this.games) {
             this.gameDao.createGame(game);
         }
-        List<Game> allInWeekFive = this.gameDao.findAllForWeek("REG5", 2016);
+        List<Game> allIn2016 = this.gameDao.findAllGamesInYear(2016);
+        Assert.assertEquals(14, allIn2016.size());
+
+        List<Game> allIn2010 = this.gameDao.findAllGamesInYear(2010);
+        Assert.assertEquals(0, allIn2010.size());
+
+        for (Game game : allIn2016) {
+            this.gameDao.deleteGame(game);
+        }
+
+        List<Game> emptyWhenDone = this.gameDao.findAllGames();
+        Assert.assertEquals(0, emptyWhenDone.size());
+    }
+
+    @Test
+    public void testFindAllGamesInWeekAndYear() {
+        Assert.assertNotNull(this.games);
+        Assert.assertNotNull(this.gameDao);
+        List<Game> ensureDbEmpty = this.gameDao.findAllGames();
+        Assert.assertEquals(0, ensureDbEmpty.size());
+
+        for (Game game : this.games) {
+            this.gameDao.createGame(game);
+        }
+        List<Game> allInWeekFive = this.gameDao.findAllGamesInWeekAndYear("REG5", 2016);
         Assert.assertEquals(14, allInWeekFive.size());
 
-        List<Game> allInWeekSix = this.gameDao.findAllForWeek("REG6", 2016);
+        List<Game> allInWeekSix = this.gameDao.findAllGamesInWeekAndYear("REG6", 2016);
         Assert.assertEquals(0, allInWeekSix.size());
 
         for (Game game : allInWeekFive) {
             this.gameDao.deleteGame(game);
         }
 
-        List<Game> emptyWhenDone = this.gameDao.findAll();
+        List<Game> emptyWhenDone = this.gameDao.findAllGames();
         Assert.assertEquals(0, emptyWhenDone.size());
     }
 }
