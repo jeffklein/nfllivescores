@@ -44,14 +44,8 @@ public class GameDaoImpl extends AbstractHibernateDao implements GameDao {
 
     @Override
     public void createOrUpdateGame(Game game) {
-        try {
-            createGame(game);
-        }
-        catch (Throwable e) {
-            logger.info("caught exception of type: "+ e.toString());// update catch clause with correct type
-            logger.warn("Record exists for gameId ["+game.getGameId()+"]. Attempting to update it.");
-            updateGame(game);
-        }
+        super.createOrUpdate(game);
+        logger.debug("Created or updated game with id: " + game.getGameId());
     }
 
     @Override
