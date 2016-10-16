@@ -3,6 +3,7 @@ package org.jeffklein.nfl.livescores.hibernate.dao;
 import org.apache.log4j.Logger;
 import org.jeffklein.nfl.livescores.model.Game;
 import org.jeffklein.nfl.livescores.model.Game_;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
@@ -31,14 +32,14 @@ public class GameDaoImpl extends AbstractHibernateDao implements GameDao {
 
     @Override
     public void deleteGame(Game game) {
-        logger.debug("Deleted game with id: " + game.getGameId());
         super.delete(game);
+        logger.debug("Deleted game with id: " + game.getGameId());
     }
 
     @Override
     public void updateGame(Game game) {
-        logger.debug("Updated game with id: " + game.getGameId());
         super.update(game);
+        logger.debug("Updated game with id: " + game.getGameId());
     }
 
     @Override
@@ -46,8 +47,9 @@ public class GameDaoImpl extends AbstractHibernateDao implements GameDao {
         try {
             createGame(game);
         }
-        catch (Exception e) {
-            logger.warn("couldn't create game. attempting to update it.", e);
+        catch (Throwable e) {
+            logger.info("caught exception of type: "+ e.toString());// update catch clause with correct type
+            logger.warn("Record exists for gameId ["+game.getGameId()+"]. Attempting to update it.");
             updateGame(game);
         }
     }
