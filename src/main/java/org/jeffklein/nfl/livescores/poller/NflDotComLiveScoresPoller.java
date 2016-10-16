@@ -27,8 +27,11 @@ public class NflDotComLiveScoresPoller {
 
     /**
      * Cron expression is set to poll once per hour, on the hour.
+     * @Scheduled(cron = "0 0 * * * *")
      */
-    @Scheduled(cron = "0 0 * * * *")
+    // every 5 mins
+    // TODO: can this be variable depending on if games are currently being played?
+    @Scheduled(cron = "0 0/5 * * * ?")
     public void pollNflDotComForScoreUpdates() {
         logger.info("cron job fired for pollNflDotComForScoreUpdates()");
         URL url = null;
