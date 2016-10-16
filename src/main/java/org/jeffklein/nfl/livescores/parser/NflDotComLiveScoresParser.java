@@ -33,11 +33,15 @@ public class NflDotComLiveScoresParser {
                 game.setDay(gameNode.get(0).asText());
                 game.setTime(gameNode.get(1).asText());
                 game.setStatus(gameNode.get(2).asText());
+                game.setTimeRemaining(gameNode.get(3).asText(null)); //default null
                 game.setAwayTeam(gameNode.get(4).asText());
                 game.setAwayScore(gameNode.get(5).asInt());
                 game.setHomeTeam(gameNode.get(6).asText());
                 game.setHomeScore(gameNode.get(7).asInt());
+                game.setTeamInPossession(gameNode.get(8).asText(null)); //default null
+                // 9th value is 0 or 1 (causes scorestrip entry to turn red (score change?))
                 game.setGameId(gameNode.get(10).asInt());
+                // 11th value unknown. maybe OT?
                 game.setWeek(gameNode.get(12).asText());
                 game.setYear(gameNode.get(13).asInt());
                 gamesList.add(game);

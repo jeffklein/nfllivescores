@@ -21,6 +21,9 @@ public class Game {
     @Column(name = "STATUS")
     private String status;
 
+    @Column(name = "TIME_REMAINING")
+    private String timeRemaining;
+
     @Column(name = "AWAY_TEAM")
     private String awayTeam;
 
@@ -32,6 +35,9 @@ public class Game {
 
     @Column(name = "HOME_SCORE")
     private Integer homeScore;
+
+    @Column(name = "TEAM_IN_POSSESSION")
+    private String teamInPossession;
 
     @Id
     @Column(name = "GAME_ID")
@@ -67,6 +73,14 @@ public class Game {
         this.status = status;
     }
 
+    public String getTimeRemaining() {
+        return timeRemaining;
+    }
+
+    public void setTimeRemaining(String timeRemaining) {
+        this.timeRemaining = timeRemaining;
+    }
+
     public String getAwayTeam() {
         return awayTeam;
     }
@@ -97,6 +111,14 @@ public class Game {
 
     public void setHomeScore(Integer homeScore) {
         this.homeScore = homeScore;
+    }
+
+    public String getTeamInPossession() {
+        return teamInPossession;
+    }
+
+    public void setTeamInPossession(String teamInPossession) {
+        this.teamInPossession = teamInPossession;
     }
 
     public Integer getGameId() {

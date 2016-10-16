@@ -45,7 +45,7 @@ public class GameDaoImpl extends AbstractHibernateDao implements GameDao {
     @Override
     public void createOrUpdateGame(Game game) {
         super.createOrUpdate(game);
-        logger.debug("Created or updated game with id: " + game.getGameId());
+        //logger.debug("Created or updated game with id: " + game.getGameId());
     }
 
     @Override
