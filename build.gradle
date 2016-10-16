@@ -3,7 +3,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
+        classpath(
+                "org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE",
+                "se.transmode.gradle:gradle-docker:1.2"
+        )
     }
 }
 
@@ -13,6 +16,8 @@ version '1.0-SNAPSHOT'
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'application'
+apply plugin: 'docker'
 
 jar {
     baseName = 'nfllivescores-spring-boot'
@@ -25,6 +30,7 @@ repositories {
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+mainClassName = 'org.jeffklein.nfl.livescores.Main'
 
 dependencies {
     compile(
@@ -50,3 +56,6 @@ dependencies {
     )
 }
 
+distDocker {
+    exposePort 8080
+}
