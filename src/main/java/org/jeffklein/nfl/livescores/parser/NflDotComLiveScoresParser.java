@@ -41,7 +41,8 @@ public class NflDotComLiveScoresParser {
                 game.setTeamInPossession(gameNode.get(8).asText(null)); //default null
                 // 9th value is 0 or 1 (causes scorestrip entry to turn red (score change?))
                 game.setGameId(gameNode.get(10).asInt());
-                // 11th value unknown. maybe OT?
+                // 11th value showed "INT" after an interception. "TD" after a touchdown.
+                // we can probably ignore this as we don't plan on being 100% real-time
                 game.setWeek(gameNode.get(12).asText());
                 game.setYear(gameNode.get(13).asInt());
                 gamesList.add(game);
