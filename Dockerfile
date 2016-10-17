@@ -1,7 +1,9 @@
 FROM anapsix/alpine-java:8_jdk
 MAINTAINER Jeff Klein "jeff@jeffklein.org"
-RUN which git
-RUN apk add git
+RUN sed -i -e 's/dl-cdn/dl-4/' /etc/apk/repositories && \
+    apk add --no-cache \
+        bash \
+        git
 RUN git clone git@github.com:jeffklein/nfllivescores.git
 EXPOSE 8080
 ADD nfllivescores-0.1.0.tar /
