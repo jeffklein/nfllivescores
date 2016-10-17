@@ -1,5 +1,6 @@
 FROM anapsix/alpine-java:8_jdk
 MAINTAINER Jeff Klein "jeff@jeffklein.org"
+RUN which git
 RUN apk add git
 RUN git clone git@github.com:jeffklein/nfllivescores.git
 EXPOSE 8080
