@@ -3,9 +3,11 @@ MAINTAINER Jeff Klein "jeff@jeffklein.org"
 RUN sed -i -e 's/dl-cdn/dl-4/' /etc/apk/repositories && \
     apk add --no-cache \
         bash \
-        git \
-        openssh
-RUN git clone git@github.com:jeffklein/nfllivescores.git
+        git
+WORKDIR /
+RUN git clone https://github.com/jeffklein/nfllivescores.git
+WORKDIR /nfllivescores
+RUN ./gradlew build -x test
+WORKDIR /nfllivescores/build/libs
 EXPOSE 8080
-ADD nfllivescores-0.1.0.tar /
-ENTRYPOINT ["/nfllivescores-0.1.0/bin/nfllivescores"]
+ENTRYPOINT ["java", "-version"]
