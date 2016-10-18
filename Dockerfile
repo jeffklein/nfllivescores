@@ -7,8 +7,8 @@ RUN sed -i -e 's/dl-cdn/dl-4/' /etc/apk/repositories && \
 WORKDIR /
 RUN git clone https://github.com/jeffklein/nfllivescores.git
 WORKDIR /nfllivescores
-RUN ls -al .gradlew
-RUN ./gradlew build -x test
+RUN ["ls", "-al", "./gradlew"]
+RUN ["./gradlew", "build", "-x", "test"]
 WORKDIR /nfllivescores/build/libs
 EXPOSE 8080
 ENTRYPOINT ["java", "-version"]
