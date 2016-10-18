@@ -18,4 +18,4 @@ RUN git clone https://github.com/jeffklein/$PROJECT.git && \
 
 WORKDIR /$PROJECT/build/libs
 EXPOSE 8080
-CMD ["java", "-jar", "./$PROJECT-springboot-$VERSION.jar"]
+CMD java -jar ./$PROJECT-springboot-$VERSION.jar
