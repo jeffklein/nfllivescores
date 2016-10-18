@@ -6,7 +6,7 @@ RUN sed -i -e 's/dl-cdn/dl-4/' /etc/apk/repositories && \
         bash \
         git
 WORKDIR /
-RUN git clone https://github.com/jeffklein/nfllivescores.git
+RUN git clone https://github.com/jeffklein/$PROJECT.git
 WORKDIR /nfllivescores
 RUN chmod u+x ./gradlew && ./gradlew build -x test
 WORKDIR /nfllivescores/build/libs
