@@ -3,7 +3,6 @@ package org.jeffklein.nfl.livescores.hibernate.dao;
 import org.apache.log4j.Logger;
 import org.jeffklein.nfl.livescores.model.Game;
 import org.jeffklein.nfl.livescores.model.Game_;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
@@ -13,8 +12,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-
-//import org.hibernate.Criteria;
 
 /**
  * Created by Jeff on 10/12/2016.
